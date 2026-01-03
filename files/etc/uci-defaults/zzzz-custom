@@ -60,6 +60,12 @@ uci set qmodem.mpcie2.type='pcie'
 uci set qmodem.mpcie2.slot='0002:21:00.0'
 uci set qmodem.mpcie2.net_led='blue:net'
 uci set qmodem.mpcie2.alias='mpcie2'
+
+if lspci -nn | grep -q "105b:e0f5"; then
+    echo "foxcomm t99w373 105b:e0f5 detected, disable qmodem dialup" >> /tmp/zz-init.log
+    uci set qmodem.main.enable_dial='0'
+fi
+
 uci commit qmodem
 echo "pcie_mhi mhi_mbim_enabled=1" > /etc/modules.d/90-pcie_mhi
 
