@@ -45,6 +45,14 @@ jobs:
         run: |
           rm -rf immortalwrt
           ./prepare.sh
+      - name: Cache OpenWrt dl and toolchain
+        uses: actions/cache@v3
+        if: always()
+        with:
+          path: |
+            immortalwrt/dl
+            immortalwrt/staging_dir
+          key: ${{ runner.os }}-openwrt-${{ hashFiles('immortalwrt/feeds.conf.default', 'xgp.config') }}
       - name: Build
         run: |
           ./build.sh
