@@ -43,6 +43,7 @@ jobs:
           sudo ./install-env.sh
       - name: Prepare
         run: |
+          rm -rf immortalwrt
           ./prepare.sh
       - name: Build
         run: |
