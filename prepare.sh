@@ -26,6 +26,7 @@ rm -rf files
 cp -r ../files .
 
 # WLAN Compatibility Fix
+mkdir -p ./files/lib/wifi/
 cp package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc ./files/lib/wifi/mac80211.uc
 sed -i 's/const bands_order = \[ "6G", "5G", "2G" \];/const bands_order = [ "2G", "5G", "6G" ];/' ./files/lib/wifi/mac80211.uc
 echo "diff lib/wifi/mac80211.uc with builder repo:"
