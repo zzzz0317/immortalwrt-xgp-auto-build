@@ -163,6 +163,12 @@ fi
 
 uci -q set zz_config.@status[0].first_boot=0
 uci commit zz_config
+
+echo "# Uncomment to enable xiguapi v3 screen brightness control cron jobs" >> /etc/crontabs/root
+echo "# minute hour day month weekday /bin/set-xgp-screen-brightness brightness_value(0-255)" >> /etc/crontabs/root
+echo "#0 0 * * * /bin/set-xgp-screen-brightness 128" >> /etc/crontabs/root
+echo "#0 8 * * * /bin/set-xgp-screen-brightness 255" >> /etc/crontabs/root
+
 fi
 
 /etc/init.d/zz_screen_control.init enable
