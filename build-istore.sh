@@ -55,5 +55,3 @@ make V=$MAKE_V -j$(nproc) || {
 }
 
 mv bin/targets/rockchip/armv8/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-squashfs-sysupgrade.img.gz bin/targets/rockchip/armv8/immortalwrt-with-istore-rockchip-armv8-nlnet_xiguapi-v3-squashfs-sysupgrade.img.gz
-echo "revert .config changes"
-cat ../xgp.config > .config
