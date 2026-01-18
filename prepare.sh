@@ -4,6 +4,9 @@ df -h
 free -h
 cat /proc/cpuinfo
 
+echo "update submodules"
+git submodule update --init --recursive --remote || { echo "submodule update failed"; exit 1; }
+
 if [ -d "immortalwrt" ]; then
     echo "repo dir exists"
     cd immortalwrt
@@ -49,19 +52,4 @@ else
     fi
     ln -s ../../zz-packages package/zz-packages
     echo "Created symlink package/zz-packages -> ../../zz-packages"
-fi
-
-if [ -d "package/zz/kmod-fb-tft-gc9307" ]; then
-    cd package/zz/kmod-fb-tft-gc9307
-    git pull || { echo "kmod-fb-tft-gc9307 git pull failed"; exit 1; }
-    cd ../../..
-else
-    git clone https://github.com/zzzz0317/kmod-fb-tft-gc9307.git package/zz/kmod-fb-tft-gc9307 || { echo "kmod-fb-tft-gc9307 git clone failed"; exit 1; }
-fi
-if [ -d "package/zz/xgp-v3-screen" ]; then
-    cd package/zz/xgp-v3-screen
-    git pull || { echo "xgp-v3-screen git pull failed"; exit 1; }
-    cd ../../..
-else
-    git clone https://github.com/zzzz0317/xgp-v3-screen.git package/zz/xgp-v3-screen || { echo "xgp-v3-screen git clone failed"; exit 1; }
 fi
