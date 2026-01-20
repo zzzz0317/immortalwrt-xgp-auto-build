@@ -21,7 +21,6 @@ uci set system.@led[-1].inverted='1'
 #uci set luci-fan.@luci-fan[0].enabled='1'
 #uci set luci-fan.@luci-fan[0].off_temp='10'
 #uci set luci-fan.@luci-fan[0].on_temp='25'
-uci set qmodem.main.at_tool='1'
 uci set qmodem.main.start_delay='15'
 uci set qmodem.main.enable_pcie_scan='1'
 uci set qmodem.main.enable_usb_scan='1'
@@ -125,6 +124,13 @@ uci set qmodem.mpcie2.type='pcie'
 uci set qmodem.mpcie2.slot='0002:21:00.0'
 uci set qmodem.mpcie2.net_led='blue:wan'
 uci set qmodem.mpcie2.alias='mpcie2'
+
+uci set qmodem.main.at_tool='1'
+
+if lsusb | grep -q "3466:3301"; then
+    echo "mt5700 3466:3301 detected, disable qmodem dialup" >> /tmp/zz-init.log
+    uci del qmodem.main.at_tool
+fi
 
 if lspci -nn | grep -q "105b:e0f5"; then
     echo "foxcomm t99w373 105b:e0f5 detected, disable qmodem dialup" >> /tmp/zz-init.log
