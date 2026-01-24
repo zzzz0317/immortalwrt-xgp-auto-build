@@ -47,6 +47,21 @@ jobs:
       - name: Build
         run: |
           ./build.sh
+      - name: Disable Rust CI LLVM download
+        run: |
+          cd immortalwrt
+          RUST_MAKEFILE="feeds/packages/lang/rust/Makefile"
+          if [ -f "$RUST_MAKEFILE" ]; then
+            echo "Found Rust Makefile at: $RUST_MAKEFILE"
+            sed -i '/^define Build\/Configure$/a\	echo "[llvm]" >> $(PKG_BUILD_DIR)/config.toml\n\	echo "download-ci-llvm = false" >> $(PKG_BUILD_DIR)/config.toml' "$RUST_MAKEFILE"
+            echo "Rust Makefile patched successfully"
+            echo "Verifying patch:"
+            grep -A 2 "define Build/Configure" "$RUST_MAKEFILE" || true
+          else
+            echo "Rust Makefile not found at: $RUST_MAKEFILE"
+            echo "Listing feeds/packages/lang directory:"
+            ls -la feeds/packages/lang/ 2>/dev/null || echo "Directory not found"
+          fi
       - name: Prepare release assets
         run: |
           mkdir -p release_assets
