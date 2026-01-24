@@ -49,15 +49,26 @@ jobs:
           cd immortalwrt
           RUST_MAKEFILE="feeds/packages/lang/rust/Makefile"
           if [ -f "$RUST_MAKEFILE" ]; then
-            echo "Found Rust Makefile at: $RUST_MAKEFILE"
-            sed -i '/^define Build\/Configure$/a\	echo "[llvm]" >> $(PKG_BUILD_DIR)/config.toml\n\	echo "download-ci-llvm = false" >> $(PKG_BUILD_DIR)/config.toml' "$RUST_MAKEFILE"
-            echo "Rust Makefile patched successfully"
-            echo "Verifying patch:"
-            grep -A 2 "define Build/Configure" "$RUST_MAKEFILE" || true
+            echo "Patching Rust Makefile..."
+            # 备份原文件
+            cp "$RUST_MAKEFILE" "${RUST_MAKEFILE}.bak"
+            # 在文件开头插入配置（使用真正的 tab）
+            {
+              echo ''
+              echo '# Disable CI LLVM download'
+              echo 'define Build/Configure'
+              printf '\techo "[llvm]" >> $(PKG_BUILD_DIR)/config.toml\n'
+              printf '\techo "download-ci-llvm = false" >> $(PKG_BUILD_DIR)/config.toml\n'
+              echo 'endef'
+              echo ''
+              cat "$RUST_MAKEFILE"
+            } > "${RUST_MAKEFILE}.new"
+            mv "${RUST_MAKEFILE}.new" "$RUST_MAKEFILE"
+            echo "Patch applied successfully"
+            echo "=== Verification (first 10 lines) ==="
+            head -10 "$RUST_MAKEFILE"
           else
-            echo "Rust Makefile not found at: $RUST_MAKEFILE"
-            echo "Listing feeds/packages/lang directory:"
-            ls -la feeds/packages/lang/ 2>/dev/null || echo "Directory not found"
+            echo "Rust Makefile not found"
           fi
       - name: Build
         run: |
