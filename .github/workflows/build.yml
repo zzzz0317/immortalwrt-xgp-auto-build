@@ -162,5 +162,6 @@ jobs:
           # tag_name: ${{ inputs.tag_name }}
           name: ${{ steps.release-prepare.outputs.RELEASE_TITLE }}
           body_path: release_info.md
+          prerelease: true
           files: |
             release_assets/*
