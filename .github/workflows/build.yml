@@ -44,9 +44,6 @@ jobs:
       - name: Prepare
         run: |
           ./prepare.sh
-      - name: Build
-        run: |
-          ./build.sh
       - name: Disable Rust CI LLVM download
         run: |
           cd immortalwrt
@@ -62,6 +59,9 @@ jobs:
             echo "Listing feeds/packages/lang directory:"
             ls -la feeds/packages/lang/ 2>/dev/null || echo "Directory not found"
           fi
+      - name: Build
+        run: |
+          ./build.sh
       - name: Prepare release assets
         run: |
           mkdir -p release_assets
