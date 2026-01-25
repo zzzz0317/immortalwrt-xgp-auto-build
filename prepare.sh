@@ -19,6 +19,9 @@ else
     cd immortalwrt
 fi
 
+# reset to 8f6bf3907696dc7de78d1da5e25e0fda223497e8 due to framebuffer compatibility issue
+git reset --hard 8f6bf3907696dc7de78d1da5e25e0fda223497e8
+
 echo "add feeds"
 cat feeds.conf.default > feeds.conf
 echo "" >> feeds.conf
