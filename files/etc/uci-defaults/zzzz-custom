@@ -167,8 +167,14 @@ if [ -n "$STOR_DEV_TO_MOUNT" ]; then
     echo "$STOR_DEV_TO_MOUNT $STOR_MOUNT_POINT auto defaults 0 2" >> /etc/fstab
     uci set dockerd.globals.data_root="$STOR_MOUNT_POINT/docker/"
     uci commit dockerd
+    if [ ! -d "$STOR_MOUNT_POINT/bandix" ]; then
+        mkdir -p "$STOR_MOUNT_POINT/bandix"
+    fi
+    uci set bandix.general.data_dir="$STOR_MOUNT_POINT/bandix"
+    uci commit bandix
     sleep 2
     /etc/init.d/dockerd restart
+    /etc/init.d/bandix restart
 else
     echo "persistent dev not found" >> /tmp/zz-init.log
 fi
