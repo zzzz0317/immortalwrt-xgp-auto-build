@@ -46,6 +46,10 @@ echo "add TD-TECH option id patch"
 cp ../999-add-TD-TECH-option-id.patch ./target/linux/rockchip/patches-6.6/999-add-TD-TECH-option-id.patch
 ls -lah ./target/linux/rockchip/patches-6.6/999-add-TD-TECH-option-id.patch
 
+if [ -f "feeds/packages/lang/rust/Makefile" ]; then
+   bash -c "cd feeds/packages && git checkout -- \"lang/rust/Makefile\""
+fi
+
 echo "update feeds"
 ./scripts/feeds update -a || { echo "update feeds failed"; exit 1; }
 echo "install feeds"
