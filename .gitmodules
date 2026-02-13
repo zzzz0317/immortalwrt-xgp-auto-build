@@ -12,3 +12,6 @@
 [submodule "zz-packages/others/openwrt-bandix"]
 	path = zz-packages/others/openwrt-bandix
 	url = https://github.com/timsaya/openwrt-bandix.git
+[submodule "zz-packages/others/mt5700webui-openwrt-server"]
+	path = zz-packages/others/mt5700webui-openwrt-server
+	url = https://github.com/vadimrew/mt5700webui-openwrt-server.git

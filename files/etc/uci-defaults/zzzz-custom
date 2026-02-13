@@ -130,6 +130,10 @@ uci set qmodem.main.at_tool='1'
 if lsusb | grep -q "3466:3301"; then
     echo "mt5700 3466:3301 detected, disable qmodem dialup" >> /tmp/zz-init.log
     uci del qmodem.main.at_tool
+else
+    echo "mt5700 3466:3301 not detected, disable mt5700webui-openwrt-server"
+    uci set at-webserver.config.enabled='0'
+    uci commit at-webserver
 fi
 
 if lspci -nn | grep -q "105b:e0f5"; then
@@ -139,6 +143,8 @@ fi
 
 uci commit qmodem
 echo "pcie_mhi mhi_mbim_enabled=1" > /etc/modules.d/90-pcie_mhi
+
+/etc/init.d/at-webserver restart
 
 STOR_DEV_FIRST="/dev/mmcblk1p1"
 STOR_DEV_FIRST_MOUNT="/mnt/mmcblk1p1"
