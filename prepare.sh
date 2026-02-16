@@ -21,7 +21,16 @@ else
 fi
 
 # reset to 8f6bf3907696dc7de78d1da5e25e0fda223497e8 due to framebuffer compatibility issue
-git reset --hard 8f6bf3907696dc7de78d1da5e25e0fda223497e8
+# git reset --hard 8f6bf3907696dc7de78d1da5e25e0fda223497e8
+
+echo "Lock Kernel version to 6.6.119"
+echo "LINUX_VERSION-6.6 = .119" > include/kernel-6.6
+echo "LINUX_KERNEL_HASH-6.6.119 = 3da09b980bb404cc28793479bb2d6c636522679215ffa65a04c893575253e5e8" >> include/kernel-6.6
+
+echo "Reset kernel patches to 6.6.119 state"
+# git checkout 581050ce4e1f28a8e371cbd090f48945e02d4448 -- target/linux/rockchip/patches-6.6/
+git restore --source=c434d02009649241e58e615d8c0666730bf01655 target/linux/generic/
+git restore --source=c434d02009649241e58e615d8c0666730bf01655 target/linux/rockchip/
 
 echo "add feeds"
 cat feeds.conf.default > feeds.conf
