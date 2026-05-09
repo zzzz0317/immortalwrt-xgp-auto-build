@@ -15,3 +15,12 @@
 [submodule "zz-packages/others/mt5700webui-openwrt-server"]
 	path = zz-packages/others/mt5700webui-openwrt-server
 	url = https://github.com/vadimrew/mt5700webui-openwrt-server.git
+[submodule "zz-packages/theme/luci-theme-aurora"]
+	path = zz-packages/theme/luci-theme-aurora
+	url = https://github.com/eamonxg/luci-theme-aurora.git
+[submodule "zz-packages/theme/luci-app-aurora-config"]
+	path = zz-packages/theme/luci-app-aurora-config
+	url = https://github.com/eamonxg/luci-app-aurora-config.git
+[submodule "zz-packages/theme/luci-theme-glass"]
+	path = zz-packages/theme/luci-theme-glass
+	url = https://github.com/rchen14b/luci-theme-glass.git
