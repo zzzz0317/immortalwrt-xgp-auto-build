@@ -1,0 +1,41 @@
+#!/bin/sh
+
+. /usr/share/libubox/jshn.sh
+
+case "$1" in
+	list)
+		echo '{ "get_info": {} }'
+		;;
+	call)
+		case "$2" in
+			get_info)
+				json_init
+				
+				# release_info
+				json_add_object "release"
+				if [ -f /etc/openwrt_release ]; then
+					. /etc/openwrt_release
+					json_add_string "ZZ_DISTRIB_NAME" "$ZZ_DISTRIB_NAME"
+					json_add_string "ZZ_DISTRIB_VERSION" "$ZZ_DISTRIB_VERSION"
+					json_add_string "DISTRIB_DESCRIPTION" "$DISTRIB_DESCRIPTION"
+				fi
+				json_close_object
+				
+				# build_info
+				json_add_object "build"
+				if [ -f /etc/zz_build_id ]; then
+					. /etc/zz_build_id
+					json_add_string "ZZ_BUILD_ID" "$ZZ_BUILD_ID"
+					json_add_string "ZZ_BUILD_DATE" "$ZZ_BUILD_DATE"
+					json_add_string "ZZ_BUILD_HOST" "$ZZ_BUILD_HOST"
+					json_add_string "ZZ_BUILD_USER" "$ZZ_BUILD_USER"
+					json_add_string "ZZ_BUILD_REPO_HASH" "$ZZ_BUILD_REPO_HASH"
+					json_add_string "ZZ_BUILD_IMM_HASH" "$ZZ_BUILD_IMM_HASH"
+				fi
+				json_close_object
+				
+				json_dump
+				;;
+		esac
+		;;
+esac

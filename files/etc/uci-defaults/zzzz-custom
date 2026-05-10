@@ -8,7 +8,7 @@ uci add_list network.lan.ip6class='mpcie2v6'
 uci add_list network.lan.ip6class='wwanv6'
 uci add_list network.lan.ip6class='wan6'
 uci set luci.main.lang='zh_cn'
-uci set luci.main.mediaurlbase='/luci-static/argon'
+uci set luci.main.mediaurlbase='/luci-static/aurora'
 uci add system led
 uci set system.@led[-1].name='system_status'
 uci set system.@led[-1].sysfs='blue:status'
@@ -30,6 +30,24 @@ uci set argon.@global[0].mode='dark'
 uci set argon.@global[0].online_wallpaper='none'
 uci set argon.@global[0].transparency_dark='0.3'
 uci commit argon
+
+uci add aurora toolbar_item
+uci set aurora.@toolbar_item[-1].enabled='1'
+uci set aurora.@toolbar_item[-1].title='Wi-Fi'
+uci set aurora.@toolbar_item[-1].url='/cgi-bin/luci/admin/network/wireless'
+uci set aurora.@toolbar_item[-1].icon='wifi.svg'
+uci add aurora toolbar_item
+uci set aurora.@toolbar_item[-1].enabled='1'
+uci set aurora.@toolbar_item[-1].title='Modem'
+uci set aurora.@toolbar_item[-1].url='/cgi-bin/luci/admin/modem/qmodem'
+uci set aurora.@toolbar_item[-1].icon='bandwidth.svg'
+uci commit aurora
+
+uci set attendedsysupgrade.client.login_check_for_upgrades='0'
+uci commit attendedsysupgrade
+
+uci del firewall.@defaults[0].flow_offloading_hw
+uci commit firewall
 
 uci set system.@system[0].ttylogin=1
 

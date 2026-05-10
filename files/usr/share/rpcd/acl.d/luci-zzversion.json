@@ -1,0 +1,10 @@
+{
+	"luci-access": {
+		"description": "Grant access to version info rpc",
+		"read": {
+			"ubus": {
+				"luci.zzversion": [ "get_info" ]
+			}
+		}
+	}
+}
