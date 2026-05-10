@@ -2,7 +2,7 @@
 is_first_boot=`uci -q get zz_config.@status[0].first_boot`
 if test $is_first_boot -gt 0; then
 uci del dhcp.lan.ra_slaac
-uci set network.lan.ipaddr='10.0.0.1'
+# uci set network.lan.ipaddr='10.0.0.1/24'
 uci add_list network.lan.ip6class='mpcie1v6'
 uci add_list network.lan.ip6class='mpcie2v6'
 uci add_list network.lan.ip6class='wwanv6'
